@@ -1,0 +1,64 @@
+﻿@model List<ModalCRUD.Models.Product>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-12 table-responsive" id="ProductDiv">
+        <div class="d-flex justify-content-between align-items-center mb-3 mt-3">
+            <h4>List of Products</h4>
+            <button type="button" class="btn btn-success" onclick="LoadProductModalBody(0)">Add Product</button>
+        </div>
+
+        @if (Model != null && Model.Any())
+        {
+            <table class="table text-center table-bordered table-hover">
+                <caption>List of Products</caption>
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Barcode</th>
+                        <th scope="col">Commands</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var product in Model)
+                    {
+                    <tr id="Product-@product.Id">
+                        <td>@product.Id</td>
+                        <td>@product.Name</td>
+                        <td>$@product.Price</td>
+                        <td>@product.Type</td>
+                        <td>@product.Barcode</td>
+                        <td>
+                            <button type="button" class="btn btn-warning btn-sm" onclick="LoadProductModalBody('@product.Id')">Edit</button>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="DeleteProduct('@product.Id')">Delete</button>
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-info w-100 text-center" role="alert">
+                No Product Founded
+            </div>
+        }
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="ProductModal" tabindex="-1" aria-labelledby="ProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="ProductModalContent">
+        </div>
+    </div>
+</div>
